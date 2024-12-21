@@ -1,11 +1,12 @@
 import { useState, useEffect, useCallback } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Row, Col } from "react-simple-flex-grid";
 import { GameContext } from "./context/game-context";
 import Ludo from "./components/Ludo";
 import Dice from "./components/Dice";
 import Menu from "./components/Menu";
 import Header from "./components/Header";
-
+import ColorSettings from "./components/ColorSettings";
 import Alert from "./components/Alert";
 import Footer from "./components/Footer";
 import { chance } from "./hooks/utils";
@@ -30,6 +31,8 @@ import MobileResponsiveWarning from "./components/MobileResponsiveWarning";
 import { StarkludoSchemaType } from "./dojo/gen/models.gen";
 import { SDK } from "@dojoengine/sdk";
 import { AvatarProvider } from "./context/avatar-context";
+import Settings from "./components/Settings";
+
 
 const App = ({ sdk }: { sdk: SDK<StarkludoSchemaType> }) => {
   console.log("SDK initialized:", sdk);
@@ -107,11 +110,12 @@ const App = ({ sdk }: { sdk: SDK<StarkludoSchemaType> }) => {
 
   return (
     <>
+    <Router>
       {showMobileResponsiveWarning ? (
-        <MobileResponsiveWarning />
-      ) : (
-        <>
-          <StarknetProvider>
+          <MobileResponsiveWarning />
+        ) : (
+          <>
+            <StarknetProvider>
             <GameContext.Provider
               value={{
                 gameState: gameState,
@@ -123,7 +127,14 @@ const App = ({ sdk }: { sdk: SDK<StarkludoSchemaType> }) => {
               <BoardContext.Provider value={{ board, toggleBoard }}>
                 <ColorProvider>
                   <DiceProvider>
+
                     <AvatarProvider>
+
+                  <Routes>
+                  <Route path="/color-settings" element={<ColorSettings/>}/>
+                  <Route path="/settings" element={<Settings />} />
+                  <Route path="/" element={ <>
+
                       <div className="game-behaviour-warning">
                         <FiAlertTriangle size={20} />
                         StarkLudo is still in active development{" "}
@@ -212,16 +223,25 @@ const App = ({ sdk }: { sdk: SDK<StarkludoSchemaType> }) => {
                         </div>
                       </div>
                       <Footer />
+
                     </AvatarProvider>
+
+                    </>
+                  }/>
+                  </Routes>
+
                   </DiceProvider>
                 </ColorProvider>
               </BoardContext.Provider>
             </GameContext.Provider>
             <ToastContainer position="bottom-center" />
-          </StarknetProvider>
-        </>
+            </StarknetProvider>
+          </>
       )}
+    </Router>
+
     </>
+
   );
 };
 
