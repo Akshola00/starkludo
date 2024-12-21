@@ -17,7 +17,7 @@ import map from "../../assets/images/Eyedropper.svg";
 import king from "../../assets/images/Crown.svg";
 import square from "../../assets/images/Polygon.svg";
 import circle from "../../assets/images/Circle.svg";
-import AvatarCard from "../AvartarCard";
+import AvatarCard from "../AvatarCard";
 
 import profile1 from "../../assets/images/profile1.jpg";
 import profile2 from "../../assets/images/profile2.jpg";
