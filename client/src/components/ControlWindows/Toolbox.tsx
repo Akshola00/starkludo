@@ -147,6 +147,7 @@ const Toolbox: React.FC<ToolboxProps> = ({
               key={item.option}
               avatar={item.avatar}
               active={avatar === item.option}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               onSelect={() => changeAvatar(item.option as any)}
             />
           ))}
