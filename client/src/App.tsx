@@ -32,9 +32,9 @@ import { StarkludoSchemaType } from "./dojo/gen/models.gen";
 import { SDK } from "@dojoengine/sdk";
 import { AvatarProvider } from "./context/avatar-context";
 import Settings from "./components/Settings";
+import ToolboxPage from "./components/Toolbox";
 
 const App = ({ sdk }: { sdk: SDK<StarkludoSchemaType> }) => {
-  console.log("SDK initialized:", sdk);
 
   const [activeWindow, setActiveWindow] = useState("");
   const [showMobileResponsiveWarning, setShowMobileResponsiveWarning] =
@@ -242,13 +242,103 @@ const App = ({ sdk }: { sdk: SDK<StarkludoSchemaType> }) => {
                                       </Col>
                                     </Row>
                                   </div>
+                                  <Row gutter={0}>
+                                    <Col xs={12} sm={12} md={7} lg={7}>
+                                      <Ludo />
+                                    </Col>
+                                    <Col xs={12} sm={12} md={5} lg={5}>
+                                      <div className="sidebar">
+                                        <div>
+                                          <div>
+                                            <div className="desktop-header">
+                                              <Header />
+                                            </div>
+                                            <Menu />
+                                            {/* <RestartGame /> */}
+                                            <Alert />
+                                            <Dice />
+                                            {activeWindow === "account" ? (
+                                              <ControlWindowLayout
+                                                toggle={() =>
+                                                  setActiveWindow("")
+                                                }
+                                                title="PROFILE"
+                                                subtitle="Your Profile Information"
+                                              >
+                                                <GameAccount />
+                                              </ControlWindowLayout>
+                                            ) : null}
+
+                                            {activeWindow === "leaderboard" ? (
+                                              <ControlWindowLayout
+                                                toggle={() =>
+                                                  setActiveWindow("")
+                                                }
+                                                title="LEADERBOARD"
+                                                subtitle="Global Player Rankings"
+                                              >
+                                                <Leaderboard />
+                                              </ControlWindowLayout>
+                                            ) : null}
+
+                                            {activeWindow === "multiplayer" ? (
+                                              <ControlWindowLayout
+                                                toggle={() =>
+                                                  setActiveWindow("")
+                                                }
+                                                title="MULTIPLAYER"
+                                                subtitle="Choose An Account To Play With"
+                                              >
+                                                <Multiplayer />
+                                              </ControlWindowLayout>
+                                            ) : null}
+
+                                            {activeWindow === "toolbox" ? (
+                                              <ControlWindowLayout
+                                                toggle={() =>
+                                                  setActiveWindow("")
+                                                }
+                                                title="TOOLBOX"
+                                                subtitle="Get All Your Items And Settings Done"
+                                              >
+                                                <Toolbox
+                                                  activeCategory={
+                                                    activeCategory
+                                                  }
+                                                  onCategoryClick={
+                                                    handleCategoryClick
+                                                  }
+                                                />
+                                              </ControlWindowLayout>
+                                            ) : null}
+
+                                            {activeWindow === "help" && (
+                                              <GameHelp
+                                                onClose={() =>
+                                                  setActiveWindow("")
+                                                }
+                                              />
+                                            )}
+                                            <Control
+                                              toggleActiveWindow={
+                                                toggleActiveWindow
+                                              }
+                                            />
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </Col>
+                                  </Row>
                                 </div>
-                                <Footer />
-                              </>
-                            }
-                          />
-                        </Routes>
-                      </AvatarProvider>
+
+                              </div>
+                              <Footer />
+                            </>
+                          }
+                        />
+                      </Routes>
+                        </AvatarProvider>
+
                     </DiceProvider>
                   </ColorProvider>
                 </BoardContext.Provider>
